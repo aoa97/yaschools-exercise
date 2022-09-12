@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class RangeSliderlSection extends StatefulWidget {
+class FilterSliderSection extends StatefulWidget {
   final String title;
 
-  const RangeSliderlSection({super.key, required this.title});
+  const FilterSliderSection({super.key, required this.title});
 
   @override
-  State<RangeSliderlSection> createState() => _RangeSliderlSectionState();
+  State<FilterSliderSection> createState() => _FilterSliderSectionState();
 }
 
-class _RangeSliderlSectionState extends State<RangeSliderlSection> {
+class _FilterSliderSectionState extends State<FilterSliderSection> {
   RangeValues _currentRangeValues = const RangeValues(50, 80);
 
   @override

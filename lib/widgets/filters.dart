@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yaschools/theme/palette.dart';
+import 'package:yaschools/widgets/filter_dropdown_section.dart';
 import 'package:yaschools/widgets/filter_horizontal_section.dart';
 import 'package:yaschools/widgets/main_button.dart';
-import 'package:yaschools/widgets/range_slider_section.dart';
+import 'package:yaschools/widgets/filter_slider_section.dart';
 
 class Filters extends StatelessWidget {
   const Filters({Key? key}) : super(key: key);
@@ -110,11 +111,10 @@ class Filters extends StatelessWidget {
                         ),
                       ),
                       const Divider(),
-                      const FilterHorizontalSection(title: "المنهح"),
-                      const FilterHorizontalSection(title: "الجاليات"),
+                      const FilterDropdownSection(title: "المنهح"),
                       const FilterHorizontalSection(title: "المرحلة الدراسية"),
                       const FilterHorizontalSection(title: "الطلاب"),
-                      const RangeSliderlSection(title: "الرسوم الدراسية"),
+                      const FilterSliderSection(title: "الرسوم الدراسية"),
                       const FilterHorizontalSection(title: "نوع المدرسة"),
                     ],
                   ),

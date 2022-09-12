@@ -1,0 +1,3 @@
+enum LookupType {
+  curriculum,
+}

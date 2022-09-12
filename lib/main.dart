@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yaschools/cubits/schools_cubit.dart';
+import 'package:yaschools/cubits/schools_list/schools_cubit.dart';
 import 'package:yaschools/http_overrides.dart';
 import 'package:yaschools/pages/main_tab.dart';
 import 'package:yaschools/theme/theme_manager.dart';

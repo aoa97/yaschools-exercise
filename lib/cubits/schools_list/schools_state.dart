@@ -8,7 +8,6 @@ class SchoolsLoading extends SchoolsState {}
 
 class SchoolsSuccess extends SchoolsState {
   final List<SchoolModel> schools;
-
   SchoolsSuccess({required this.schools});
 }
 

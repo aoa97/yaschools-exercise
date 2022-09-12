@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yaschools/cubits/schools_cubit.dart';
-import 'package:yaschools/cubits/schools_state.dart';
+import 'package:yaschools/cubits/schools_list/schools_cubit.dart';
+import 'package:yaschools/cubits/schools_list/schools_state.dart';
 import 'package:yaschools/widgets/schools_list_item.dart';
 
 class SchoolsList extends StatelessWidget {
