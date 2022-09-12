@@ -6,6 +6,11 @@ ThemeData getApplicationTheme() {
     primarySwatch: Palette.mainSwatch,
     scaffoldBackgroundColor: Palette.scaffold,
     textTheme: const TextTheme(
+      headline1: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
       headline2: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -19,10 +24,15 @@ ThemeData getApplicationTheme() {
       headline4: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Palette.grey,
+        color: Palette.black,
       ),
       headline5: TextStyle(
         fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Palette.grey,
+      ),
+      headline6: TextStyle(
+        fontSize: 11,
         fontWeight: FontWeight.bold,
         color: Palette.grey,
       ),

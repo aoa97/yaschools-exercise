@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaschools/cubits/schools_cubit.dart';
+import 'package:yaschools/cubits/schools_state.dart';
 import 'package:yaschools/widgets/schools_list_item.dart';
 
 class SchoolsList extends StatelessWidget {
@@ -7,16 +10,26 @@ class SchoolsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(15),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 3 / 5.5,
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-        itemBuilder: (_, index) => const SchoolsListItem(),
-        itemCount: 14,
+      child: BlocBuilder<SchoolsCubit, SchoolsState>(
+        builder: (_, state) {
+          if (state is SchoolsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is SchoolsSuccess) {
+            return GridView.builder(
+              padding: const EdgeInsets.all(15),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 3 / 6,
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (_, index) => SchoolsListItem(state.schools[index]),
+              itemCount: state.schools.length,
+            );
+          } else {
+            return const Center(child: Text('Something went wrong'));
+          }
+        },
       ),
     );
   }

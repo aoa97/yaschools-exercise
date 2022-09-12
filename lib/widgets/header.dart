@@ -60,8 +60,9 @@ class Header extends StatelessWidget {
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) =>
-                    const FilterButton(label: "المدينة: الرياض"),
+                itemBuilder: (_, index) => const FilterButton(
+                  label: "المدينة: الرياض",
+                ),
                 separatorBuilder: (_, index) => const SizedBox(width: 5),
                 itemCount: 10,
               ),

@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             height: 30,
           ),
           const SizedBox(width: 8),
-          const Text("تصفح المدارس")
+          Text("تصفح المدارس", style: Theme.of(context).textTheme.headline1)
         ]),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.map_outlined)),

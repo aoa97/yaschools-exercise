@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:yaschools/models/school_model.dart';
 import 'package:yaschools/utils/assets.dart';
 import 'package:yaschools/widgets/main_button.dart';
 import 'package:yaschools/widgets/rating_stars.dart';
 
 class SchoolsListItem extends StatelessWidget {
-  const SchoolsListItem({super.key});
+  final SchoolModel item;
+
+  const SchoolsListItem(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +27,15 @@ class SchoolsListItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Placeholder(fallbackHeight: 8, fallbackWidth: 16),
+                    Image.network(AppAssets.flagKSA, height: 8, width: 16),
                     const SizedBox(width: 5),
-                    Text("اهلى", style: Theme.of(context).textTheme.headline4),
+                    Text(
+                      item.categoryTitle,
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
                   ],
                 ),
-                const RatingStars()
+                RatingStars(value: item.totalRating)
               ],
             ),
           ),
@@ -39,7 +45,10 @@ class SchoolsListItem extends StatelessWidget {
               children: [
                 const Icon(Icons.people, color: Colors.grey, size: 16),
                 const SizedBox(width: 5),
-                Text("بنين", style: Theme.of(context).textTheme.headline4),
+                Text(
+                  item.genderTitle,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ],
             ),
           ),
@@ -47,16 +56,17 @@ class SchoolsListItem extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Image.network(AppAssets.schoolLogo),
+                  Expanded(
+                    child: Image.network(item.logo),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    item.name,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                   Text(
-                    'قمم الحياة العالمية',
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  Text(
-                    'العزيزية - الرياض',
+                    '${item.districtName} - ${item.cityName}',
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ],
@@ -85,8 +95,8 @@ class SchoolsListItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "الرسوم تبدأ من 12 ر.س",
-                  style: Theme.of(context).textTheme.headline5,
+                  "الرسوم تبدأ من ${item.minFee} ر.س",
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ],
             ),
