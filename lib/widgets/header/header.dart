@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yaschools/theme/palette.dart';
-import 'package:yaschools/widgets/filter_button.dart';
-import 'package:yaschools/widgets/filters.dart';
+import 'package:yaschools/widgets/header/filter_button.dart';
+import 'package:yaschools/widgets/filters/filters_modal.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});

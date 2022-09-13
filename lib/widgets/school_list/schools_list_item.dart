@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yaschools/models/school_model.dart';
 import 'package:yaschools/utils/assets.dart';
-import 'package:yaschools/widgets/main_button.dart';
-import 'package:yaschools/widgets/rating_stars.dart';
+import 'package:yaschools/widgets/ui/main_button.dart';
+import 'package:yaschools/widgets/ui/rating_stars.dart';
 
 class SchoolsListItem extends StatelessWidget {
   final SchoolModel item;
@@ -57,7 +57,12 @@ class SchoolsListItem extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: Image.network(item.logo),
+                    child: Image.network(
+                      item.logo,
+                      errorBuilder: (_, __, ___) => Image.network(
+                        AppAssets.schoolPlaceholder,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 5),
                   Text(

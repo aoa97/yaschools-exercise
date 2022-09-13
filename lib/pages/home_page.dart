@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yaschools/utils/assets.dart';
-import 'package:yaschools/widgets/header.dart';
-import 'package:yaschools/widgets/schools_list.dart';
+import 'package:yaschools/widgets/header/header.dart';
+import 'package:yaschools/widgets/school_list/schools_list.dart';
 import 'package:yaschools/widgets/search_form.dart';
 
 class HomePage extends StatefulWidget {

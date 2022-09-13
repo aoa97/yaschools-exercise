@@ -36,6 +36,10 @@ ThemeData getApplicationTheme() {
         fontWeight: FontWeight.bold,
         color: Palette.grey,
       ),
+      caption: TextStyle(
+        fontSize: 14,
+        color: Palette.grey,
+      ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
