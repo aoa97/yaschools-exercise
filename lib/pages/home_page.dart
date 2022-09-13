@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaschools/cubits/school_filters/filters_cubit.dart';
 import 'package:yaschools/utils/assets.dart';
 import 'package:yaschools/widgets/header/header.dart';
 import 'package:yaschools/widgets/school_list/schools_list.dart';

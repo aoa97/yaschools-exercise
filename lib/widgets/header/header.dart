@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaschools/cubits/school_filters/filters_cubit.dart';
+import 'package:yaschools/cubits/school_filters/filters_state.dart';
 import 'package:yaschools/theme/palette.dart';
+import 'package:yaschools/utils/enums.dart';
 import 'package:yaschools/widgets/header/filter_button.dart';
 import 'package:yaschools/widgets/filters/filters_modal.dart';
 
@@ -9,6 +13,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final filters = BlocProvider.of<FiltersCubit>(context);
 
     showFilters() {
       showModalBottomSheet(
@@ -26,50 +31,55 @@ class Header extends StatelessWidget {
       );
     }
 
-    return Container(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton.icon(
-                  onPressed: showFilters,
-                  icon: const Icon(Icons.filter_list),
-                  label: const Text("تصفية المدارس"),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Palette.black,
-                    textStyle: Theme.of(context).textTheme.headline3,
+    return BlocConsumer<FiltersCubit, Map<LookupType, dynamic>>(
+      builder: (_, state) => Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton.icon(
+                    onPressed: showFilters,
+                    icon: const Icon(Icons.filter_list),
+                    label: const Text("تصفية المدارس"),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Palette.black,
+                      textStyle: Theme.of(context).textTheme.headline3,
+                    ),
                   ),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.autorenew, size: 14),
-                  label: const Text("إعادة تهيئة البحث"),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Palette.grey,
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.autorenew, size: 14),
+                    label: const Text("إعادة تهيئة البحث"),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Palette.grey,
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-              child: ListView.separated(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) => const FilterButton(
-                  label: "المدينة: الرياض",
-                ),
-                separatorBuilder: (_, index) => const SizedBox(width: 5),
-                itemCount: 10,
+                ],
               ),
-            )
-          ],
+              if (filters.state.isNotEmpty)
+                SizedBox(
+                  height: 30,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (_, index) => FilterButton(
+                      type: filters.state.keys.toList()[index],
+                      label: filters.state.values.toList()[index],
+                    ),
+                    separatorBuilder: (_, index) => const SizedBox(width: 5),
+                    itemCount: filters.state.length,
+                  ),
+                )
+            ],
+          ),
         ),
       ),
+      listener: (_, state) {},
     );
   }
 }

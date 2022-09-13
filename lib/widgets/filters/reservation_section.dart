@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yaschools/theme/palette.dart';
+import 'package:yaschools/utils/enums.dart';
 import 'package:yaschools/widgets/filters/reservation_item.dart';
 
 class ReservationSection extends StatelessWidget {
@@ -27,11 +28,13 @@ class ReservationSection extends StatelessWidget {
           const ReservationIItem(
             title: 'تقـسيـط',
             subtitle: 'مدارس لديها إمكانية التقسيط على 12 شهر',
+            type: LookupType.hasDiscount,
           ),
           const SizedBox(height: 10),
           const ReservationIItem(
             title: 'دفــعــات',
             subtitle: 'دفع الرسوم على 3 دفعات',
+            type: LookupType.hasInstallment,
           ),
         ],
       ),

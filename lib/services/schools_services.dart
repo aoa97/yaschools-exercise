@@ -8,9 +8,8 @@ class SchoolsServices {
 
   static final instance = SchoolsServices._();
 
-  Future<List<SchoolModel>> fetchSchools({String? query}) async {
+  Future<List<SchoolModel>> fetchSchools() async {
     var url = '${AppAssets.baseUrl}/parent/school/search';
-
     final resJSON = await http.get(Uri.parse(url));
     final res = jsonDecode(resJSON.body) as Map<String, dynamic>;
     final items = res['data']['items'];

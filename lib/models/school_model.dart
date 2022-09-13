@@ -47,7 +47,9 @@ class SchoolModel {
       nameAr: data['name_ar'] ?? '',
       nameEn: data['name_en'] ?? '',
       logo: data['logo'] ?? '',
-      totalRating: data['total_rating'].toDouble() ?? 0,
+      totalRating: data['total_rating'] is String
+          ? double.parse(data['total_rating'])
+          : data['total_rating'].toDouble(),
       rateCount: data['rate_count'] ?? '',
       cityName: data['city_name'] ?? '',
       districtName: data['district_name'] ?? '',

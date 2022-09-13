@@ -39,7 +39,7 @@ class SchoolsListSkeleton extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     SkeletonParagraph(
-                      style: const SkeletonParagraphStyle(lines: 3),
+                      style: const SkeletonParagraphStyle(lines: 2),
                     ),
                   ],
                 ),

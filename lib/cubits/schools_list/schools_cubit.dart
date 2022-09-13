@@ -7,10 +7,9 @@ class SchoolsCubit extends Cubit<SchoolsState> {
 
   void getSchools({String? query}) async {
     final services = SchoolsServices.instance;
-
     emit(SchoolsLoading());
     try {
-      final schools = await services.fetchSchools(query: query);
+      final schools = await services.fetchSchools();
       emit(SchoolsSuccess(schools: schools));
     } on Exception catch (_) {
       emit(SchoolsFailure());

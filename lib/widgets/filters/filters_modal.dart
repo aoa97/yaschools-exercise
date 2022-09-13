@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaschools/cubits/schools_lookups/lookups_cubit.dart';
+import 'package:yaschools/cubits/schools_lookups/lookups_state.dart';
+import 'package:yaschools/utils/enums.dart';
 import 'package:yaschools/widgets/filters/filter_dropdown_section.dart';
 import 'package:yaschools/widgets/filters/filter_horizontal_section.dart';
 import 'package:yaschools/widgets/filters/location_section.dart';
@@ -10,45 +14,74 @@ class Filters extends StatelessWidget {
   const Filters({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+  Widget build(context) {
+    final lookups = BlocProvider.of<LookupsCubit>(context);
+
+    return BlocConsumer<LookupsCubit, LookupsState>(
+      builder: (_, state) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: Card(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              child: Builder(builder: (context) {
+                if (state is LookupsLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is LookupsSuccess) {
+                  return Column(
                     children: [
-                      Text(
-                        "تصفية البحث",
-                        style: Theme.of(context).textTheme.headline2,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "تصفية البحث",
+                                style: Theme.of(context).textTheme.headline2,
+                              ),
+                              const SizedBox(height: 8),
+                              const ReservationSection(),
+                              const LocationSection(),
+                              const Divider(),
+                              FilterDropdownSection(
+                                title: "المنهح",
+                                list: lookups.curriculums,
+                                type: LookupType.curriculum,
+                              ),
+                              FilterHorizontalSection(
+                                title: "المرحلة الدراسية",
+                                list: lookups.stages,
+                                type: LookupType.stage,
+                              ),
+                              FilterHorizontalSection(
+                                title: "الطلاب",
+                                list: lookups.students,
+                                type: LookupType.student,
+                              ),
+                              FilterHorizontalSection(
+                                title: "نوع المدرسة",
+                                list: lookups.categories,
+                                type: LookupType.category,
+                              ),
+                              const FilterSliderSection(
+                                title: "الرسوم الدراسية",
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 8),
-                      const ReservationSection(),
-                      const LocationSection(),
-                      const Divider(),
-                      const FilterDropdownSection(title: "المنهح"),
-                      const FilterHorizontalSection(title: "المرحلة الدراسية"),
-                      const FilterHorizontalSection(title: "الطلاب"),
-                      const FilterSliderSection(title: "الرسوم الدراسية"),
-                      const FilterHorizontalSection(title: "نوع المدرسة"),
+                      MainButton(
+                        label: "تصفية النتائج",
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
                     ],
-                  ),
-                ),
-              ),
-              MainButton(
-                label: "تصفية النتائج",
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                onPressed: () {},
-              ),
-            ],
-          ),
+                  );
+                }
+                return const Center(child: Text("Something went wrong"));
+              })),
         ),
       ),
+      listener: (_, state) => {},
     );
   }
 }
