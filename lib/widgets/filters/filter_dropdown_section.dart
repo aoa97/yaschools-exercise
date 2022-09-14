@@ -44,9 +44,9 @@ class FilterDropdownSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title),
-                DropdownButton(
+                DropdownButtonFormField<LookupModel>(
+                  decoration: const InputDecoration(hintText: 'المنهج'),
                   isExpanded: true,
-                  hint: Text(title),
                   items: list
                       .map((LookupModel e) =>
                           DropdownMenuItem(value: e, child: Text(e.name)))

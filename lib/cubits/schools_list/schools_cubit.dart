@@ -6,13 +6,17 @@ import 'package:yaschools/services/schools_services.dart';
 class SchoolsCubit extends Cubit<SchoolsState> {
   SchoolsCubit() : super(SchoolsInitial());
 
-  void getSchools({List<FilterModel>? filters}) async {
-    final Map<String, dynamic> queryParams = {};
+  void getSchools({List<FilterModel>? filters, String? searchQuery}) async {
+    Map<String, dynamic> queryParams = {};
 
     if (filters != null) {
       for (FilterModel e in filters) {
         queryParams.putIfAbsent(e.filterKey, () => e.filterVal);
       }
+    }
+
+    if (searchQuery!.isNotEmpty) {
+      queryParams.addAll({'name': searchQuery});
     }
 
     final services = SchoolsServices.instance;

@@ -11,6 +11,8 @@ class LookupsCubit extends Cubit<LookupsState> {
   List<LookupModel> stages = [];
   List<LookupModel> students = [];
   List<LookupModel> categories = [];
+  List<LookupModel> cities = [];
+  List<LookupModel> districts = [];
   bool? hasInstallment;
   bool? hasDiscount;
 
@@ -22,9 +24,15 @@ class LookupsCubit extends Cubit<LookupsState> {
       stages = await services.fetchLookup(LookupType.stage);
       students = await services.fetchLookup(LookupType.student);
       categories = await services.fetchLookup(LookupType.category);
+      cities = await services.fetchLookup(LookupType.city);
       emit(LookupsSuccess());
     } on Exception catch (_) {
       emit(LookupsFailure());
     }
+  }
+
+  void getDistrictById(int id) async {
+    final services = LookupsServices.instance;
+    districts = await services.fetchLookup(LookupType.district, id: id);
   }
 }
