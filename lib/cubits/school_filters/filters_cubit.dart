@@ -1,29 +1,30 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaschools/models/filter_model.dart';
 import 'package:yaschools/utils/enums.dart';
 
-class FiltersCubit extends Cubit<Map<LookupType, dynamic>> {
+class FiltersCubit extends Cubit<Map<LookupType, FilterModel>> {
   FiltersCubit() : super({});
 
   removeFilterItem(LookupType type) {
-    final newState = {...state};
-    newState.remove(type);
-    emit(newState);
+    state.remove(type);
+    emit({...state});
   }
 
-  setSelFilters(LookupType type, dynamic value, {bool? isRemovable = false}) {
-    final newState = {...state};
+  get filterValues {
+    return state.values.toList();
+  }
 
-    if (state.containsKey(type) && state[type] == true) {
-      newState.remove(type);
-    } else if (isRemovable! && state[type] == value) {
-      newState.remove(type);
+  setSelFilters(LookupType type, FilterModel model) {
+    if (!state.containsKey(type)) {
+      state.putIfAbsent(type, () => model);
+    } else if (state[type]!.filterVal == true) {
+      state.remove(type);
+    } else if (model.isRemovable! && state[type]!.valAr == model.valAr) {
+      state.remove(type);
     } else if (state.containsKey(type)) {
-      newState.update(type, (curVal) => value);
-    } else {
-      newState.putIfAbsent(type, () => value);
+      state.update(type, (curVal) => model);
     }
 
-    emit(newState);
-    print(state);
+    emit({...state});
   }
 }

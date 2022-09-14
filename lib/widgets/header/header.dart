@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaschools/cubits/school_filters/filters_cubit.dart';
-import 'package:yaschools/cubits/school_filters/filters_state.dart';
 import 'package:yaschools/theme/palette.dart';
 import 'package:yaschools/utils/enums.dart';
 import 'package:yaschools/widgets/header/filter_button.dart';
@@ -69,7 +68,8 @@ class Header extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, index) => FilterButton(
                       type: filters.state.keys.toList()[index],
-                      label: filters.state.values.toList()[index],
+                      label: filters.filterValues[index].typeAr,
+                      value: filters.filterValues[index].valAr,
                     ),
                     separatorBuilder: (_, index) => const SizedBox(width: 5),
                     itemCount: filters.state.length,

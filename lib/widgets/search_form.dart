@@ -8,7 +8,7 @@ class SerachForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     searchHandler(String val) {
-      BlocProvider.of<SchoolsCubit>(context).getSchools(query: val);
+      BlocProvider.of<SchoolsCubit>(context).getSchools();
     }
 
     return Container(

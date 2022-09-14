@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaschools/cubits/school_filters/filters_cubit.dart';
+import 'package:yaschools/cubits/schools_list/schools_cubit.dart';
 import 'package:yaschools/utils/enums.dart';
 
 class FilterButton extends StatelessWidget {
-  final dynamic label;
+  final String label;
+  final dynamic value;
   final LookupType type;
 
   const FilterButton({
     super.key,
     required this.label,
+    required this.value,
     required this.type,
   });
 
   @override
   Widget build(BuildContext context) {
-    deleteItem() {
-      print(type);
-      BlocProvider.of<FiltersCubit>(context).removeFilterItem(type);
-    }
+    final filters = BlocProvider.of<FiltersCubit>(context);
+    final schools = BlocProvider.of<SchoolsCubit>(context);
 
-    var text = label;
-    if (type == LookupType.hasDiscount) {
-      text = 'يشمل إمكانية التقسيط';
-    }
-    if (type == LookupType.hasInstallment) {
-      text = 'يشمل الرسوم على دفعات';
+    deleteItem() {
+      filters.removeFilterItem(type);
+      schools.getSchools(filters: filters.filterValues);
     }
 
     return Material(
@@ -40,7 +38,7 @@ class FilterButton extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                text,
+                label.isEmpty ? value : '$label : $value',
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 11,
