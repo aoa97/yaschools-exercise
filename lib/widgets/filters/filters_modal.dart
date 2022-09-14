@@ -49,8 +49,8 @@ class Filters extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               const ReservationSection(),
-                              // const LocationSection(),
-                              // const Divider(),
+                              const LocationSection(),
+                              const Divider(),
                               FilterDropdownSection(
                                 title: "المنهح",
                                 list: lookups.curriculums,
@@ -75,9 +75,9 @@ class Filters extends StatelessWidget {
                                 filterKey: 'category_id',
                                 type: LookupType.category,
                               ),
-                              // const FilterSliderSection(
-                              //   title: "الرسوم الدراسية",
-                              // ),
+                              const FilterSliderSection(
+                                title: "الرسوم الدراسية",
+                              ),
                             ],
                           ),
                         ),

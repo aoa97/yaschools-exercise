@@ -25,14 +25,13 @@ class FilterDropdownSection extends StatelessWidget {
 
     setFilter(LookupModel lookup) {
       filters.setSelFilters(
-        type,
-        FilterModel(
-          filterKey: filterKey,
-          filterVal: lookup.id,
-          typeAr: title,
-          valAr: lookup.name,
-        ),
-      );
+          type,
+          FilterModel(
+            filterKey: filterKey,
+            filterVal: lookup.id,
+            typeAr: title,
+            valAr: lookup.name,
+          ));
     }
 
     return Column(
