@@ -21,11 +21,11 @@ class FiltersCubit extends Cubit<Map<LookupType, FilterModel>> {
     if (!state.containsKey(type)) {
       state.putIfAbsent(type, () => model);
     } else {
-      if (state.containsKey(type)) {
+      if (state[type]!.valAr == model.valAr) {
+        state.remove(type);
+      } else if (state.containsKey(type)) {
         state.update(type, (curVal) => model);
       } else if (state[type]!.filterVal == true) {
-        state.remove(type);
-      } else if (model.isRemovable! && state[type]!.valAr == model.valAr) {
         state.remove(type);
       }
     }

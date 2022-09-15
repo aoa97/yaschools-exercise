@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RatingStars extends StatelessWidget {
   final double? value;
@@ -8,14 +7,15 @@ class RatingStars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RatingBarIndicator(
-      itemSize: 13.0,
-      itemCount: 5,
-      rating: value ?? 5,
-      itemBuilder: (context, index) => const Icon(
-        Icons.star,
-        color: Colors.amber,
-      ),
+    return Row(
+      children: [
+        Text('5 / $value', style: const TextStyle(fontSize: 11)),
+        const Icon(
+          Icons.star,
+          color: Colors.orange,
+          size: 14,
+        ),
+      ],
     );
   }
 }

@@ -7,4 +7,6 @@ enum LookupType {
   category,
   hasInstallment,
   hasDiscount,
+  min,
+  max
 }

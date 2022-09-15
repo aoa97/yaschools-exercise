@@ -15,7 +15,7 @@ class SchoolsCubit extends Cubit<SchoolsState> {
       }
     }
 
-    if (searchQuery!.isNotEmpty) {
+    if (searchQuery != null) {
       queryParams.addAll({'name': searchQuery});
     }
 

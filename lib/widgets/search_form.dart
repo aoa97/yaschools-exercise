@@ -15,7 +15,7 @@ class SerachForm extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.only(bottom: 16, left: 8, right: 8),
+      padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       child: TextField(
         onSubmitted: searchHandler,
         textInputAction: TextInputAction.search,

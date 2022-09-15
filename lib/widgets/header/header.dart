@@ -34,7 +34,7 @@ class Header extends StatelessWidget {
       builder: (_, state) => Container(
         color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Column(
             children: [
               Row(
@@ -61,7 +61,8 @@ class Header extends StatelessWidget {
                 ],
               ),
               if (filters.state.isNotEmpty)
-                SizedBox(
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
                   height: 30,
                   child: ListView.separated(
                     shrinkWrap: true,

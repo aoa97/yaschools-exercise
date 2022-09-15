@@ -11,6 +11,8 @@ class SchoolsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -53,36 +55,44 @@ class SchoolsListItem extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Center(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Image.network(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.network(
                       item.logo,
+                      height: size.height * .12,
+                      width: size.height * .12,
                       errorBuilder: (_, __, ___) => Image.network(
                         AppAssets.schoolPlaceholder,
+                        height: size.height * .12,
+                        width: size.height * .12,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    item.name,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  Text(
-                    '${item.districtName} - ${item.cityName}',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        item.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ),
+                    Text(
+                      '${item.districtName} - ${item.cityName}',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 5),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   padding: const EdgeInsets.all(4),
@@ -99,6 +109,7 @@ class SchoolsListItem extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(width: 5),
                 Text(
                   "الرسوم تبدأ من ${item.minFee} ر.س",
                   style: Theme.of(context).textTheme.headline6,
@@ -106,6 +117,7 @@ class SchoolsListItem extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 8),
           MainButton(
             label: "احجز الأن",
             icon: Icons.pan_tool_alt,
