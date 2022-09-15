@@ -55,7 +55,7 @@ class SchoolModel {
       districtName: data['district_name'] ?? '',
       genderTitle: data['gender_title'] ?? '',
       categoryTitle: data['category_title'] ?? '',
-      featured: data['featured'] ?? 'featured',
+      featured: data['featured'] ?? 0,
       accredited: data['accredited'] ?? 0,
       discount: data['discount'] ?? 0,
       minFee: data['min_fee'] ?? '',

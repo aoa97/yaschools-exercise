@@ -5,6 +5,10 @@ import 'package:yaschools/utils/enums.dart';
 class FiltersCubit extends Cubit<Map<LookupType, FilterModel>> {
   FiltersCubit() : super({});
 
+  clearFilters() {
+    state.clear();
+  }
+
   removeFilterItem(LookupType type) {
     if (type == LookupType.city) {
       state.remove(LookupType.district);
@@ -13,15 +17,11 @@ class FiltersCubit extends Cubit<Map<LookupType, FilterModel>> {
     emit({...state});
   }
 
-  get filterValues {
-    return state.values.toList();
-  }
-
   setSelFilters(LookupType type, FilterModel model) {
     if (!state.containsKey(type)) {
       state.putIfAbsent(type, () => model);
     } else {
-      if (state[type]!.valAr == model.valAr) {
+      if (state[type]!.valAr == model.valAr && model.isRemovable!) {
         state.remove(type);
       } else if (state.containsKey(type)) {
         state.update(type, (curVal) => model);

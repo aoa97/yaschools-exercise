@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yaschools/cubits/schools_list/schools_cubit.dart';
+import 'package:yaschools/cubits/schools_lookups/lookups_cubit.dart';
 import 'package:yaschools/utils/assets.dart';
 import 'package:yaschools/widgets/header/header.dart';
 import 'package:yaschools/widgets/school_list/schools_list.dart';
@@ -16,6 +19,13 @@ class _HomePageState extends State<HomePage> {
 
   _toggleSearch() {
     setState(() => _isSearchVisible = !_isSearchVisible);
+  }
+
+  @override
+  void initState() {
+    BlocProvider.of<LookupsCubit>(context);
+    BlocProvider.of<SchoolsCubit>(context);
+    super.initState();
   }
 
   @override

@@ -11,7 +11,7 @@ class SchoolsListSkeleton extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(15),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 3 / 6,
+        childAspectRatio: .55,
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
@@ -28,7 +28,7 @@ class SchoolsListSkeleton extends StatelessWidget {
                 child: Column(
                   children: [
                     SkeletonParagraph(
-                      style: const SkeletonParagraphStyle(lines: 2),
+                      style: const SkeletonParagraphStyle(lines: 1),
                     ),
                     const SizedBox(height: 5),
                     SkeletonAvatar(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaschools/cubits/school_filters/filters_cubit.dart';
+import 'package:yaschools/cubits/schools_list/schools_cubit.dart';
+import 'package:yaschools/cubits/schools_list/schools_state.dart';
 import 'package:yaschools/theme/palette.dart';
-import 'package:yaschools/utils/enums.dart';
 import 'package:yaschools/widgets/header/filter_button.dart';
 import 'package:yaschools/widgets/filters/filters_modal.dart';
 
@@ -12,6 +13,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final schools = BlocProvider.of<SchoolsCubit>(context);
     final filters = BlocProvider.of<FiltersCubit>(context);
 
     showFilters() {
@@ -30,7 +32,12 @@ class Header extends StatelessWidget {
       );
     }
 
-    return BlocConsumer<FiltersCubit, Map<LookupType, dynamic>>(
+    refresh() {
+      schools.getSchools();
+      filters.clearFilters();
+    }
+
+    return BlocConsumer<SchoolsCubit, SchoolsState>(
       builder: (_, state) => Container(
         color: Colors.white,
         child: Padding(
@@ -50,7 +57,7 @@ class Header extends StatelessWidget {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: refresh,
                     icon: const Icon(Icons.autorenew, size: 14),
                     label: const Text("إعادة تهيئة البحث"),
                     style: TextButton.styleFrom(
@@ -60,7 +67,7 @@ class Header extends StatelessWidget {
                   ),
                 ],
               ),
-              if (filters.state.isNotEmpty)
+              if (schools.filterValues.isNotEmpty)
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   height: 30,
@@ -68,12 +75,12 @@ class Header extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (_, index) => FilterButton(
-                      type: filters.state.keys.toList()[index],
-                      label: filters.filterValues[index].typeAr,
-                      value: filters.filterValues[index].valAr,
+                      type: schools.filterKeys[index],
+                      label: schools.filterValues[index].typeAr,
+                      value: schools.filterValues[index].valAr,
                     ),
                     separatorBuilder: (_, index) => const SizedBox(width: 5),
-                    itemCount: filters.state.length,
+                    itemCount: schools.filterValues.length,
                   ),
                 )
             ],

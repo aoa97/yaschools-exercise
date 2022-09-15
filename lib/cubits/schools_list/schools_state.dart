@@ -8,7 +8,8 @@ class SchoolsLoading extends SchoolsState {}
 
 class SchoolsSuccess extends SchoolsState {
   final List<SchoolModel> schools;
-  SchoolsSuccess({required this.schools});
+  final bool? isReachedMax;
+  SchoolsSuccess({required this.schools, this.isReachedMax});
 }
 
 class SchoolsFailure extends SchoolsState {}

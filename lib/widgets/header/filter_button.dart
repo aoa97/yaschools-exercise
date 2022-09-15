@@ -23,7 +23,7 @@ class FilterButton extends StatelessWidget {
 
     deleteItem() {
       filters.removeFilterItem(type);
-      schools.getSchools(filters: filters.filterValues);
+      schools.getSchools(filters: filters.state);
     }
 
     return Material(

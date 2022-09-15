@@ -10,6 +10,6 @@ class FilterModel {
     required this.filterVal,
     required this.typeAr,
     required this.valAr,
-    this.isRemovable,
+    this.isRemovable = false,
   });
 }

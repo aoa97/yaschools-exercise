@@ -15,24 +15,26 @@ class LocationSection extends StatefulWidget {
 }
 
 class _LocationSectionState extends State<LocationSection> {
-  var _isPreview = false;
-  var category = '';
+  var _isCityPreview = false;
+  var _isDistPreview = false;
 
   @override
   Widget build(BuildContext context) {
     final filters = BlocProvider.of<FiltersCubit>(context);
     final lookups = BlocProvider.of<LookupsCubit>(context);
 
-    togglePreview(String cat) {
-      category = cat;
+    togglePreview(LookupType type) async {
       final selCity = filters.state[LookupType.city];
 
-      if (cat == 'dist' && selCity != null) {
-        final cityId = selCity.filterVal;
-        lookups.getDistrictById(cityId);
-      }
-
-      setState(() => _isPreview = !_isPreview);
+      setState(() {
+        if (type == LookupType.district) {
+          _isDistPreview = !_isDistPreview;
+          _isCityPreview = false;
+        } else {
+          _isCityPreview = !_isCityPreview;
+          _isDistPreview = false;
+        }
+      });
     }
 
     return BlocConsumer<FiltersCubit, Map<LookupType, FilterModel>>(
@@ -52,24 +54,30 @@ class _LocationSectionState extends State<LocationSection> {
                       titleText: 'المدينة',
                       titleIcon: Icons.location_on_outlined,
                       value: city != null ? city.valAr : 'كل المدن',
-                      onTogglePreview: () => togglePreview('city'),
+                      onTogglePreview: () => togglePreview(LookupType.city),
                     ),
                     const VerticalDivider(thickness: 1.3),
                     LocationItem(
                       titleText: 'الحى',
                       titleIcon: Icons.person_pin_circle,
                       value: district != null ? district.valAr : 'كل الأحياء',
-                      onTogglePreview: () => togglePreview('dist'),
+                      onTogglePreview: () => togglePreview(LookupType.district),
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 8),
-            if (_isPreview && category == 'city')
-              const LocationPreview(LookupType.city),
-            if (_isPreview && category == 'dist')
-              const LocationPreview(LookupType.district)
+            if (_isCityPreview)
+              LocationPreview(
+                type: LookupType.city,
+                onClose: () => setState(() => _isCityPreview = false),
+              ),
+            if (_isDistPreview)
+              LocationPreview(
+                type: LookupType.district,
+                onClose: () => setState(() => _isDistPreview = false),
+              ),
           ],
         );
       },

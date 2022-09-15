@@ -8,8 +8,13 @@ import 'package:yaschools/utils/enums.dart';
 
 class LocationPreview extends StatelessWidget {
   final LookupType type;
+  final Function onClose;
 
-  const LocationPreview(this.type, {Key? key}) : super(key: key);
+  const LocationPreview({
+    Key? key,
+    required this.type,
+    required this.onClose,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +31,20 @@ class LocationPreview extends StatelessWidget {
       typeAr = 'المدينة';
     }
 
+    setFilter(item) {
+      if (isCity) lookups.getDistrictById(item.id);
+      filters.setSelFilters(
+        type,
+        FilterModel(
+          filterKey: filterKey,
+          filterVal: item.id,
+          typeAr: typeAr,
+          valAr: item.name,
+        ),
+      );
+      onClose();
+    }
+
     return BlocConsumer<FiltersCubit, Map<LookupType, FilterModel>>(
       builder: (_, state) => Container(
           color: Palette.scaffold,
@@ -40,43 +59,42 @@ class LocationPreview extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline4,
               ),
               const SizedBox(height: 8),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 0,
-                  childAspectRatio: 4 / 1,
-                  children: list
-                      .map((e) => InkWell(
-                            onTap: () => filters.setSelFilters(
-                              type,
-                              FilterModel(
-                                filterKey: filterKey,
-                                filterVal: e.id,
-                                typeAr: typeAr,
-                                valAr: e.name,
-                              ),
-                            ),
-                            child: Text(
-                              e.name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: filters.state.containsKey(type) &&
-                                        filters.state[type]!.valAr == e.name
-                                    ? Theme.of(context).primaryColor
-                                    : Colors.black,
-                              ),
-                            ),
-                          ))
-                      .toList(),
+              if (type == LookupType.district &&
+                  !filters.state.containsKey(LookupType.city))
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'قم بإختيار المدينة أولاً ..',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                  ),
                 ),
-              )
+              if (type == LookupType.city ||
+                  filters.state.containsKey(LookupType.city))
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 0,
+                    childAspectRatio: 4 / 1,
+                    children: list.map((item) {
+                      final isActive = filters.state.containsKey(type) &&
+                          filters.state[type]!.valAr == item.name;
 
-              // Center(
-              //   child: Text(
-              //     'قم بإختيار المدينة أولاً ..',
-              //     style: Theme.of(context).textTheme.headline4,
-              //   ),
-              // ),
+                      return InkWell(
+                        onTap: () => setFilter(item),
+                        child: Text(
+                          item.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isActive
+                                ? Theme.of(context).primaryColor
+                                : Colors.black,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
             ],
           )),
       listener: (_, state) {},

@@ -18,6 +18,23 @@ class _FilterSliderSectionState extends State<FilterSliderSection> {
   RangeLabels labels = const RangeLabels('5000', "50000");
 
   @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      final filters = BlocProvider.of<FiltersCubit>(context);
+      final min = filters.state[LookupType.min];
+      final max = filters.state[LookupType.max];
+
+      if (min != null && max != null) {
+        final minVal = min.filterVal;
+        final maxVal = max.filterVal;
+        values = RangeValues(minVal.toDouble(), maxVal.toDouble());
+        labels = RangeLabels('$maxVal', '$maxVal');
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final filters = BlocProvider.of<FiltersCubit>(context);
 
@@ -31,15 +48,6 @@ class _FilterSliderSectionState extends State<FilterSliderSection> {
       });
 
       filters.setSelFilters(
-        LookupType.min,
-        FilterModel(
-          filterKey: 'min',
-          filterVal: min,
-          typeAr: 'السعر من',
-          valAr: '$min',
-        ),
-      );
-      filters.setSelFilters(
         LookupType.max,
         FilterModel(
           filterKey: 'max',
@@ -48,29 +56,41 @@ class _FilterSliderSectionState extends State<FilterSliderSection> {
           valAr: '$max',
         ),
       );
+      filters.setSelFilters(
+        LookupType.min,
+        FilterModel(
+          filterKey: 'min',
+          filterVal: min,
+          typeAr: 'السعر من',
+          valAr: '$min',
+        ),
+      );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(widget.title),
-              RangeSlider(
-                min: 5000,
-                max: 50000,
-                values: values,
-                labels: labels,
-                onChanged: handleChange,
-              ),
-            ],
+    return BlocConsumer<FiltersCubit, Map<LookupType, FilterModel>>(
+      builder: (_, state) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.title),
+                RangeSlider(
+                  min: 5000,
+                  max: 50000,
+                  values: values,
+                  labels: labels,
+                  onChanged: handleChange,
+                ),
+              ],
+            ),
           ),
-        ),
-        const Divider()
-      ],
+          const Divider()
+        ],
+      ),
+      listener: (_, state) => {},
     );
   }
 }

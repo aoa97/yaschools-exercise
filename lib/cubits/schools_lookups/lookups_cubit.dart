@@ -16,7 +16,7 @@ class LookupsCubit extends Cubit<LookupsState> {
   bool? hasInstallment;
   bool? hasDiscount;
 
-  void getLookups() async {
+  Future<void> getLookups() async {
     final services = LookupsServices.instance;
     emit(LookupsLoading());
     try {
@@ -31,7 +31,7 @@ class LookupsCubit extends Cubit<LookupsState> {
     }
   }
 
-  void getDistrictById(int id) async {
+  Future<void> getDistrictById(int id) async {
     final services = LookupsServices.instance;
     districts = await services.fetchLookup(LookupType.district, id: id);
   }

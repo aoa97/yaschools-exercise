@@ -22,79 +22,74 @@ class Filters extends StatelessWidget {
     final schools = BlocProvider.of<SchoolsCubit>(context);
 
     handlePress() {
-      schools.getSchools(filters: filters.filterValues);
       Navigator.of(context).pop();
+      // Selects nothing / doesn't change filters => skip fetching again
+      if (filters.state.isEmpty || filters.state == schools.currentFilters) {
+        return;
+      }
+      schools.getSchools(filters: filters.state);
     }
 
-    return BlocConsumer<LookupsCubit, LookupsState>(
-      builder: (_, state) => Directionality(
-        textDirection: TextDirection.rtl,
-        child: Card(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: Builder(builder: (context) {
-                if (state is LookupsLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is LookupsSuccess) {
-                  return Column(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "تصفية البحث",
-                                style: Theme.of(context).textTheme.headline2,
-                              ),
-                              const SizedBox(height: 8),
-                              const ReservationSection(),
-                              const LocationSection(),
-                              const Divider(),
-                              FilterDropdownSection(
-                                title: "المنهح",
-                                list: lookups.curriculums,
-                                filterKey: 'curriculum_id',
-                                type: LookupType.curriculum,
-                              ),
-                              FilterHorizontalSection(
-                                title: "المرحلة الدراسية",
-                                list: lookups.stages,
-                                filterKey: 'stage_id',
-                                type: LookupType.stage,
-                              ),
-                              FilterHorizontalSection(
-                                title: "الطلاب",
-                                list: lookups.students,
-                                filterKey: 'gender_id',
-                                type: LookupType.student,
-                              ),
-                              FilterHorizontalSection(
-                                title: "نوع المدرسة",
-                                list: lookups.categories,
-                                filterKey: 'category_id',
-                                type: LookupType.category,
-                              ),
-                              const FilterSliderSection(
-                                title: "الرسوم الدراسية",
-                              ),
-                            ],
-                          ),
-                        ),
+                      Text(
+                        "تصفية البحث",
+                        style: Theme.of(context).textTheme.headline2,
                       ),
-                      MainButton(
-                        label: "تصفية النتائج",
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        onPressed: handlePress,
+                      const SizedBox(height: 8),
+                      const ReservationSection(),
+                      const LocationSection(),
+                      const Divider(),
+                      FilterDropdownSection(
+                        title: "المنهح",
+                        list: lookups.curriculums,
+                        filterKey: 'curriculum_id',
+                        type: LookupType.curriculum,
+                      ),
+                      FilterHorizontalSection(
+                        title: "المرحلة الدراسية",
+                        list: lookups.stages,
+                        filterKey: 'stage_id',
+                        type: LookupType.stage,
+                      ),
+                      FilterHorizontalSection(
+                        title: "الطلاب",
+                        list: lookups.students,
+                        filterKey: 'gender_id',
+                        type: LookupType.student,
+                      ),
+                      FilterHorizontalSection(
+                        title: "نوع المدرسة",
+                        list: lookups.categories,
+                        filterKey: 'category_id',
+                        type: LookupType.category,
+                      ),
+                      const FilterSliderSection(
+                        title: "الرسوم الدراسية",
                       ),
                     ],
-                  );
-                }
-                return const Center(child: Text("Something went wrong"));
-              })),
+                  ),
+                ),
+              ),
+              MainButton(
+                label: "تصفية النتائج",
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                onPressed: handlePress,
+              ),
+            ],
+          ),
         ),
       ),
-      listener: (_, state) => {},
     );
   }
 }
