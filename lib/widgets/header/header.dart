@@ -49,11 +49,11 @@ class Header extends StatelessWidget {
                 children: [
                   TextButton.icon(
                     onPressed: showFilters,
-                    icon: const Icon(Icons.filter_list),
+                    icon: const Icon(Icons.filter_list, size: 20),
                     label: const Text("تصفية المدارس"),
                     style: TextButton.styleFrom(
                       foregroundColor: Palette.black,
-                      textStyle: Theme.of(context).textTheme.headline3,
+                      textStyle: Theme.of(context).textTheme.headline3!,
                     ),
                   ),
                   TextButton.icon(
@@ -62,7 +62,7 @@ class Header extends StatelessWidget {
                     label: const Text("إعادة تهيئة البحث"),
                     style: TextButton.styleFrom(
                       foregroundColor: Palette.grey,
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                      textStyle: const TextStyle(fontSize: 14),
                     ),
                   ),
                 ],

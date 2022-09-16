@@ -17,7 +17,7 @@ ThemeData getApplicationTheme() {
         color: Palette.black,
       ),
       headline3: TextStyle(
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: FontWeight.bold,
         color: Palette.black,
       ),
@@ -44,9 +44,24 @@ ThemeData getApplicationTheme() {
       filled: true,
       fillColor: Colors.white,
       labelStyle: TextStyle(color: Palette.grey),
+      contentPadding: EdgeInsets.only(left: 5),
+      constraints: BoxConstraints(maxHeight: 40),
+      isCollapsed: true,
+      isDense: true,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Palette.mainSwatch,
+        ),
+      ),
     ),
     sliderTheme: const SliderThemeData(
       showValueIndicator: ShowValueIndicator.always,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+      ),
     ),
   );
 }

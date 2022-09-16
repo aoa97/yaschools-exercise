@@ -18,6 +18,7 @@ class SerachForm extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
       child: TextField(
         onSubmitted: searchHandler,
+        textAlignVertical: TextAlignVertical.center,
         textInputAction: TextInputAction.search,
         decoration: const InputDecoration(
           hintText: "اكتب كلمة البحث هنا",

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: _isSearchVisible ? size.height * .20 : size.height * .12,
+        toolbarHeight: _isSearchVisible ? size.height * .20 : size.height * .09,
         bottom: PreferredSize(
           preferredSize: Size.zero,
           child: Visibility(
@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
           Text("تصفح المدارس", style: Theme.of(context).textTheme.headline1)
         ]),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.map_outlined)),
           IconButton(onPressed: _toggleSearch, icon: const Icon(Icons.search)),
         ],
       ),
